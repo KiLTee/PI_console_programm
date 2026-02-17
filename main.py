@@ -1,4 +1,12 @@
-"""Модуль запуска программы"""
+
+"""!@file main.py
+@brief Модуль запуска программы — анализатор информации об уязвимостях.
+@author [Имя автора]
+@date [Дата создания/обновления]
+@details Программа реализует GUI-интерфейс для анализа данных об уязвимостях ПО,
+включая парсинг Excel-файлов, формирование отчётов и расчёт CVSS.
+"""
+
 
 import tkinter as tk
 from tkinter import messagebox, ttk, font, BOTH, Button, X
@@ -8,7 +16,15 @@ import word
 
 
 def change_dict(table_inf: any, bdu: any, key: any) -> None:
-    """Функция заполнения данных в таблицу"""
+    """!@brief Заполняет словарь table_inf данными из структуры bdu по ключу key.
+    @details Формирует структурированный словарь с метаданными об уязвимости,
+    включая наименование, идентификатор, описание, класс, ПО, версию и другие атрибуты.
+    @param table_inf Словарь (dict), который заполняется данными (выходной параметр).
+    @param bdu Структура данных (dict/list) с исходной информацией об уязвимостях.
+    @param key Ключ (str/int) для доступа к записи об уязвимости в структуре bdu.
+    @return None (функция модифицирует table_inf «на месте»).
+    @see Функция используется в handle_kla_vul() для формирования отчётов.
+    """
     table_inf["Наименование уязвимости"] = bdu[key][1]
     table_inf["Идентификатор уязвимости"] = key
     table_inf["Идентификаторы других систем описаний уязвимостей"] = (
@@ -56,7 +72,11 @@ def change_dict(table_inf: any, bdu: any, key: any) -> None:
 
 
 def main():
-    """Функция запуска программы с обработкой GUI"""
+    """!@brief Основная функция программы — запуск GUI и обработка логики приложения.
+    @details Инициализирует окно tkinter, создаёт закладки (notebook),
+    размещает элементы управления (labels, entries, buttons) и связывает их с логикой.
+    @return None
+    """
     # --------------------------------Область с текстом содержания--------------------------------
     menu_text = [
         "Ниже, укажите ссылки на:",
@@ -87,11 +107,14 @@ def main():
         "./Результаты",
     ]
 
-    # -------------Область создания закладок в программе и их функций
-    def make_markers():  # Создание закладок
+    def make_markers():  
+        """!@brief Создаёт структуру закладок (tabs) в GUI.
+        @return Словарь с виджетами ttk.Frame для каждой закладки.
+        @details Инициализирует ttk.Notebook и добавляет 5 закладок с уникальными метками.
+        """
         result = {}
-        tab = ttk.Notebook(root)  # Созадне закладок
-        main_marker = ttk.Frame(tab)  # Создание 1 закладки
+        tab = ttk.Notebook(root)
+        main_marker = ttk.Frame(tab)
         result["Меню"] = main_marker
         cvss_calc_marker = ttk.Frame(tab)
         result["cvssv2 калькулятор"] = cvss_calc_marker
@@ -114,6 +137,12 @@ def main():
         return result
 
     def create_menu_marker(main_marker, menu_text):  # Закладка меню
+        """!@brief Создаёт элементы закладки «Меню».
+        @param main_marker Виджет ttk.Frame для размещения элементов.
+        @param menu_text Список строк с подписями для labels.
+        @details Размещает labels и entries для ввода путей к файлам и настроек.
+        @return None
+        """
         frame_lines = make_lines(len(menu_text), main_marker)
         make_lables(frame_lines, menu_text)
         entry_mass = make_entry(frame_lines)
@@ -195,6 +224,11 @@ def main():
 
     # --------------------------------Область функций--------------------------------
     def take_values(entry_mass):
+        """!@brief Извлекает значения из виджетов Entry.
+        @param entry_mass Список виджетов ttk.Entry.
+        @return Словарь {метка: значение} для всех полей ввода.
+        @details Сопоставляет текст из entry с метками из menu_text.
+        """
         result = {}
         for i in range(1, len(entry_mass) + 1):
             result[menu_text[i]] = entry_mass[i - 1].get()
@@ -202,6 +236,11 @@ def main():
         return result
 
     def handle_kla_vul(entry_dict):
+        """!@brief Обрабатывает данные об уязвимостях и генерирует отчёты.
+        @param entry_dict Словарь с путями к файлам и настройками из GUI.
+        @details Парсит Excel-файлы, формирует таблицу уязвимостей и создаёт Word-документы.
+        @see Использует функции parse.xlsx() и word.print_metodic().
+        """
         table_inf = {}
         bdu = parse.xlsx(
             entry_dict["Отчет об уязвимостях касперского:"],
@@ -219,6 +258,12 @@ def main():
         parse.make_base(bdu, entry_dict["Имя автора отчетов:"])
 
     def start_program(progressbar_, entry_mass):
+        """!@brief Запускает основной процесс анализа при нажатии кнопки «Старт».
+        @param progressbar_ Виджет ttk.Progressbar для индикации загрузки.
+        @param entry_mass Список виджетов ttk.Entry с настройками.
+        @details Валидирует входные данные, запускает парсинг в отдельном процессе.
+        @return None
+        """
         progressbar_.start()
         entry_dict = take_values(entry_mass)
         string_message = "Введите:"
@@ -266,11 +311,5 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    main() # Запуск основной функции при исполнении скрипта
 
-# _________________________________= TO DO LIST __________________________________
-# - реализация алгоритма для поиска по перечню ПО (test.py/find_patch (4))
-# - реализация нормального счетчика устройств (Parser.py/make_base (140))
-# - перенос на гереаторы счестчикв. Реcтуктуризация приложения
-# - исправить создание файла База в конце
-# ________________________________________________________________________________

@@ -1,0 +1,68 @@
+\doxysection{main.\+py File Reference}
+\hypertarget{main_8py}{}\label{main_8py}\index{main.py@{main.py}}
+
+
+Модуль запуска программы — анализатор информации об уязвимостях.  
+
+
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+None \doxymbox{\hyperlink{main_8py_a4f601c8b46d119555265ece0d8894a99}{main.\+change\+\_\+dict}} (any table\+\_\+inf, any bdu, any key)
+\begin{DoxyCompactList}\small\item\em Заполняет словарь table\+\_\+inf данными из структуры bdu по ключу key. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{main_8py_a3140e9a5b6a71ffbf498198cfc471b88}{main.\+main}} ()
+\begin{DoxyCompactList}\small\item\em Основная функция программы — запуск GUI и обработка логики приложения. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Модуль запуска программы — анализатор информации об уязвимостях. 
+
+\begin{DoxyAuthor}{Author}
+\+[Имя автора]\+ 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+\+[Дата создания/\+обновления]\+
+\end{DoxyDate}
+Программа реализует GUI-\/интерфейс для анализа данных об уязвимостях ПО, включая парсинг Excel-\/файлов, формирование отчётов и расчёт CVSS. 
+
+\label{doc-func-members}
+\Hypertarget{main_8py_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{main_8py_a4f601c8b46d119555265ece0d8894a99}\index{main.py@{main.py}!change\_dict@{change\_dict}}
+\index{change\_dict@{change\_dict}!main.py@{main.py}}
+\doxysubsubsection{\texorpdfstring{change\_dict()}{change\_dict()}}
+{\footnotesize\ttfamily \label{main_8py_a4f601c8b46d119555265ece0d8894a99} 
+ None main.\+change\+\_\+dict (\begin{DoxyParamCaption}\item[{any}]{table\+\_\+inf}{, }\item[{any}]{bdu}{, }\item[{any}]{key}{}\end{DoxyParamCaption})}
+
+
+
+Заполняет словарь table\+\_\+inf данными из структуры bdu по ключу key. 
+
+Формирует структурированный словарь с метаданными об уязвимости, включая наименование, идентификатор, описание, класс, ПО, версию и другие атрибуты. 
+\begin{DoxyParams}{Parameters}
+{\em table\+\_\+inf} & Словарь (dict), который заполняется данными (выходной параметр). \\
+\hline
+{\em bdu} & Структура данных (dict/\+list) с исходной информацией об уязвимостях. \\
+\hline
+{\em key} & Ключ (str/\+int) для доступа к записи об уязвимости в структуре bdu. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+None (функция модифицирует table\+\_\+inf «на месте»). 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+Функция используется в handle\+\_\+kla\+\_\+vul() для формирования отчётов. 
+\end{DoxySeeAlso}
+\Hypertarget{main_8py_a3140e9a5b6a71ffbf498198cfc471b88}\index{main.py@{main.py}!main@{main}}
+\index{main@{main}!main.py@{main.py}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily \label{main_8py_a3140e9a5b6a71ffbf498198cfc471b88} 
+main.\+main (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Основная функция программы — запуск GUI и обработка логики приложения. 
+
+Инициализирует окно tkinter, создаёт закладки (notebook), размещает элементы управления (labels, entries, buttons) и связывает их с логикой. \begin{DoxyReturn}{Returns}
+None 
+\end{DoxyReturn}
