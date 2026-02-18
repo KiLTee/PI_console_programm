@@ -1,0 +1,10 @@
+name: Hello World Workflow
+
+on: [push]  # Триггер: запуск при любом пуше в репозиторий
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # Окружение: последняя версия Ubuntu
+    steps:
+      - name: Say Hello
+        run: echo "Hello, World!"  # Простая команда
