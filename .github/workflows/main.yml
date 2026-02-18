@@ -1,0 +1,29 @@
+name: Travis Check
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  check-test-file:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Check for travis.txt
+        run: |
+          if [ ! -f "requirements.txt" ]; then
+            echo "Error: requirements.txt not found!"
+            exit 1
+          else
+            echo "requirements.txt exists!"
+          fi
+
+      - name: Count lines in test_travis.txt
+        run: |
+          wc -l requirements.txt
+
