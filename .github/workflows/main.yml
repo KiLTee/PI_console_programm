@@ -16,14 +16,14 @@ jobs:
 
       - name: Check for travis.txt
         run: |
-          if [ ! -f "travis.txt" ]; then
-            echo "Error: test_travis.txt not found!"
+          if [ ! -f "requirements.txt" ]; then
+            echo "Error: requirements.txt not found!"
             exit 1
           else
-            echo "travis.txt exists!"
+            echo "requirements.txt exists!"
           fi
 
       - name: Count lines in test_travis.txt
         run: |
-          wc -l travis.txt
+          wc -l requirements.txt
 
