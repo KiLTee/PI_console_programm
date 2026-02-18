@@ -1,10 +1,29 @@
-name: Hello World Workflow
+name: Travis Check
 
-on: [push]
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
 
 jobs:
-  build:
-    runs-on: ubuntu-latest 
+  check-test-file:
+    runs-on: ubuntu-latest
+
     steps:
-      - name: Say Hello
-        run: echo "Hello, World!"
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Check for travis.txt
+        run: |
+          if [ ! -f "travis.txt" ]; then
+            echo "Error: test_travis.txt not found!"
+            exit 1
+          else
+            echo "travis.txt exists!"
+          fi
+
+      - name: Count lines in test_travis.txt
+        run: |
+          wc -l travis.txt
+
