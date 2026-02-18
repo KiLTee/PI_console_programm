@@ -22,8 +22,15 @@ jobs:
           else
             echo "requirements.txt exists!"
           fi
-
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.PAT }}
+          publish_dir: ./docs/html
       - name: Count lines in test_travis.txt
         run: |
           wc -l requirements.txt
+
+
+
 
